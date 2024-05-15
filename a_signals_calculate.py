@@ -26,6 +26,7 @@ class Window(QtWidgets.QWidget):
         self.ui.Minus.clicked.connect(lambda: self.calc(self.ui.Minus.text()))
         self.ui.Plus.clicked.connect(lambda: self.calc(self.ui.Plus.text()))
         self.ui.Clear.clicked.connect(self.clear)
+        self.ui.Result.clicked.connect(self.res)
 
     def calc(self, number):
         self.ui.ShowResult.setText(self.ui.ShowResult.text() + number)
@@ -33,7 +34,10 @@ class Window(QtWidgets.QWidget):
     def clear(self):
         self.ui.ShowResult.clear()
 
-    def
+    def res(self):
+        self.ui.ShowResult.setText(str(eval(self.ui.ShowResult.text())))
+
+
 
 
 
