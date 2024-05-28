@@ -2,7 +2,7 @@ import time
 
 import requests
 
-from PySide2 import QtWidgets, QtCore, QtGui
+from PySide6 import QtWidgets, QtCore, QtGui
 
 from ui import res
 from ui.zachet import Ui_Form

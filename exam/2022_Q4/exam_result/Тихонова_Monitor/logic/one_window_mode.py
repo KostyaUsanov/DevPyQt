@@ -14,9 +14,9 @@
 """
 from PySide6 import QtWidgets, QtGui
 
-from ui_form.omg import Ui_MainWindow
+from Тихонова_Monitor.ui_form.omg import Ui_MainWindow
 
-from logic.threads import SystemInfo, ProcInfoThread, ServInfoThread, TaskSchedulerInfo, DisksInfo
+from Тихонова_Monitor.logic.threads import SystemInfo, ProcInfoThread, ServInfoThread, TaskSchedulerInfo, DisksInfo
 
 
 class Window(QtWidgets.QMainWindow):

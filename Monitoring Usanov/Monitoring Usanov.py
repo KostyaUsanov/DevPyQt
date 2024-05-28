@@ -1,11 +1,14 @@
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QTableWidgetItem
-from examsysinfo import Ui_Form
-from exam_threads import SystemInfo, SystemServices, SystemProc
+from sysinfo import Ui_Form
+from threads import SystemInfo, SystemServices, SystemProc
 
 import psutil
-#import cpuinfo
 import win32com.client
+
+
+class SystemScheduler:
+    pass
 
 
 class Window(QtWidgets.QWidget):
@@ -16,7 +19,7 @@ class Window(QtWidgets.QWidget):
         self.sysinfo = SystemInfo()
         self.sysservices = SystemServices()
         self.sysprocs = SystemProc()
-        # self.sysscheduler = SystemScheduler()
+        #self.sysscheduler = SystemScheduler()
         self.ui = Ui_Form()
         self.ui.setupUi(self)
         self.initUi()
@@ -63,14 +66,14 @@ class Window(QtWidgets.QWidget):
 
         self.ui.textEdit_HDD.setEnabled(False)
         self.ui.textEdit_HDD.setText(
-            f"Объём всего: {round(psutil.disk_usage('/')[0] / 1024 / 1024, 1)} MB\n"
-            f"Использовано: {round(psutil.disk_usage('/')[1] / 1024 / 1024, 1)} MB\n"
-            f"Свободно: {round(psutil.disk_usage('/')[2] / 1024 / 1024, 1)} MB\n"
+            f"Объём всего: {round(psutil.disk_usage('/')[0] / 1024 / 1024, 2)} MB\n"
+            f"Использовано: {round(psutil.disk_usage('/')[1] / 1024 / 1024, 2)} MB\n"
+            f"Свободно: {round(psutil.disk_usage('/')[2] / 1024 / 1024, 2)} MB\n"
             f"Процент: {psutil.disk_usage('/')[3]} %"
         )
-        if len(psutil.disk_partitions()) == 1:
-            self.ui.textEdit_HDD2.setEnabled(False)
-            self.ui.textEdit_HDD2.setText("Диск отсутствует")
+        # if len(psutil.disk_partitions()) == 1:
+        #     self.ui.textEdit_HDD2.setEnabled(False)
+        #     self.ui.textEdit_HDD2.setText("Диск отсутствует")
 
     def initThread(self):
         """
