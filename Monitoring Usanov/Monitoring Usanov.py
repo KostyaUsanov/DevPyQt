@@ -1,6 +1,6 @@
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QTableWidgetItem
-from sysinfo import Ui_Form
+from examsysinfo3 import Ui_Form
 from threads import SystemInfo, SystemServices, SystemProc
 
 import psutil
@@ -66,14 +66,22 @@ class Window(QtWidgets.QWidget):
 
         self.ui.textEdit_HDD.setEnabled(False)
         self.ui.textEdit_HDD.setText(
-            f"Объём всего: {round(psutil.disk_usage('/')[0] / 1024 / 1024, 2)} MB\n"
-            f"Использовано: {round(psutil.disk_usage('/')[1] / 1024 / 1024, 2)} MB\n"
-            f"Свободно: {round(psutil.disk_usage('/')[2] / 1024 / 1024, 2)} MB\n"
-            f"Процент: {psutil.disk_usage('/')[3]} %"
+            f"Объём всего: {round(psutil.disk_usage('C:/')[0] / 1024 / 1024, 1)} MB\n"
+            f"Использовано: {round(psutil.disk_usage('C:/')[1] / 1024 / 1024, 1)} MB\n"
+            f"Свободно: {round(psutil.disk_usage('C:/')[2] / 1024 / 1024, 1)} MB\n"
+            f"Занято памяти: {psutil.disk_usage('C:/')[3]} %"
         )
-        # if len(psutil.disk_partitions()) == 1:
-        #     self.ui.textEdit_HDD2.setEnabled(False)
-        #     self.ui.textEdit_HDD2.setText("Диск отсутствует")
+
+        if len(psutil.disk_partitions()) == 1:
+            self.ui.textEdit_HDD2.setEnabled(False)
+            self.ui.textEdit_HDD2.setText("Диск отсутствует")
+        else:
+            self.ui.textEdit_HDD2.setEnabled(False)
+            self.ui.textEdit_HDD2.setText(
+            f"Объём всего: {round(psutil.disk_usage('D:/')[0] / 1024 / 1024, 1)} MB\n"
+            f"Использовано: {round(psutil.disk_usage('D:/')[1] / 1024 / 1024, 1)} MB\n"
+            f"Свободно: {round(psutil.disk_usage('D:/')[2] / 1024 / 1024, 1)} MB\n"
+            f"Занято памяти: {psutil.disk_usage('D:/')[3]} %")
 
     def initThread(self):
         """
@@ -114,7 +122,7 @@ class Window(QtWidgets.QWidget):
         column_count = 2
         self.ui.table_service.setColumnCount(column_count)
         self.ui.table_service.setColumnWidth(0, 150)
-        self.ui.table_service.setHorizontalHeaderItem(0, QTableWidgetItem("serv_name"))
+        self.ui.table_service.setHorizontalHeaderItem(0, QTableWidgetItem("Название службы"))
         self.ui.table_service.setHorizontalHeaderItem(1, QTableWidgetItem("Описание"))
         self.ui.table_service.setColumnWidth(1, 350)
         self.ui.table_service.setRowCount(row_count)
@@ -133,11 +141,11 @@ class Window(QtWidgets.QWidget):
         column_count = 3
         self.ui.table_proc.setColumnCount(column_count)
         self.ui.table_proc.setColumnWidth(0, 300)
-        self.ui.table_proc.setHorizontalHeaderItem(0, QTableWidgetItem("proc_name"))
+        self.ui.table_proc.setHorizontalHeaderItem(0, QTableWidgetItem("Имя процесса"))
         self.ui.table_proc.setColumnWidth(1, 100)
-        self.ui.table_proc.setHorizontalHeaderItem(1, QTableWidgetItem("cpu_%"))
+        self.ui.table_proc.setHorizontalHeaderItem(1, QTableWidgetItem("cpu %"))
         self.ui.table_proc.setColumnWidth(2, 100)
-        self.ui.table_proc.setHorizontalHeaderItem(2, QTableWidgetItem("mem_%"))
+        self.ui.table_proc.setHorizontalHeaderItem(2, QTableWidgetItem("memory %"))
         self.ui.table_proc.setRowCount(row_count)
         self.ui.table_proc.setSortingEnabled(True)
         for num, proc in enumerate(service):
@@ -161,6 +169,8 @@ class Window(QtWidgets.QWidget):
         self.ui.table_sched.setHorizontalHeaderItem(1, QTableWidgetItem("task_state"))
         self.ui.table_sched.setColumnWidth(2, 100)
         self.ui.table_sched.setHorizontalHeaderItem(2, QTableWidgetItem("task_lust_runtime"))
+        self.ui.table_sched.setColumnWidth(3, 100)
+        self.ui.table_sched.setHorizontalHeaderItem(3, QTableWidgetItem("Прочее"))
         for num, work in enumerate(service):
             # print(num, work[0], work[1], work[2])
             self.ui.table_sched.setItem(num, 0, QTableWidgetItem(work[0]))

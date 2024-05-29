@@ -89,6 +89,7 @@ class Window(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+        self.proxyModel = None
         self.initModel()
         self.initUi()
         self.initSignals()
